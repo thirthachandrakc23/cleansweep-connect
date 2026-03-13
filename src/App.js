@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { db } from "./firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 // ── Fonts ──────────────────────────────────────────────────────────────────
 const FontLink = () => (
@@ -1212,16 +1214,46 @@ export default function App() {
     volunteer: <VolunteerDashboard />,
     govt: <GovtDashboard />,
   };
+  async function addTestReport() {
+    try {
+      await addDoc(collection(db, "reports"), {
+        location: "Test Location",
+        description: "Garbage near road",
+        status: "pending"
+      });
 
-  return (
-    <>
-      <FontLink />
-      <div style={{ background: C.bg, minHeight: "100vh", color: C.text }}>
-        <Navbar page={page} setPage={setPage} />
-        {pages[page]}
+      alert("Report added to database");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+return (
+  <>
+    <FontLink />
+    <div style={{ background: C.bg, minHeight: "100vh", color: C.text }}>
+      <Navbar page={page} setPage={setPage} />
+
+      <div style={{ padding: "20px" }}>
+        <button
+          onClick={addTestReport}
+          style={{
+            padding: "10px 20px",
+            background: "green",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer"
+          }}
+        >
+          Test Firebase Upload
+        </button>
       </div>
-    </>
-  );
+
+      {pages[page]}
+    </div>
+  </>
+);
 }
 
 
