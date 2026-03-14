@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { loginUser } from "./login";
+import FriendUI from "./FriendUI";
+
 
 // ── Fonts ──────────────────────────────────────────────────────────────────
 const FontLink = () => (
@@ -175,7 +178,7 @@ const StatCard = ({ label, value, sub, icon, color = C.teal, delay = 0 }) => (
 );
 
 // ── NAVBAR ─────────────────────────────────────────────────────────────────
-const Navbar = ({ page, setPage }) => {
+const Navbar = ({ page, setPage, handleReportClick, handleVolunteerClick, handleGovClick }) => {
   const tabs = [
     { id: "landing", label: "Home" },
     { id: "reports", label: "Reports" },
@@ -197,7 +200,12 @@ const Navbar = ({ page, setPage }) => {
       </div>
       <div style={{ display: "flex", gap: 4, marginLeft: "auto" }}>
         {tabs.map(t => (
-          <button key={t.id} onClick={() => setPage(t.id)} style={{
+          <button key={t.id} onClick={() => {
+  if (t.id === "reports") handleReportClick();
+  else if (t.id === "volunteer") handleVolunteerClick();
+  else if (t.id === "govt") handleGovClick();
+  else setPage(t.id);
+}} style={{
             background: page === t.id ? C.tealDim : "transparent",
             color: page === t.id ? C.teal : C.muted,
             border: page === t.id ? `1px solid ${C.teal}44` : "1px solid transparent",
@@ -206,7 +214,7 @@ const Navbar = ({ page, setPage }) => {
           }}>{t.label}</button>
         ))}
       </div>
-      <button style={{
+      <button onClick={handleReportClick} style={{
         background: `linear-gradient(135deg, ${C.teal}, ${C.tealLight})`,
         color: "#000", border: "none", borderRadius: 8, padding: "8px 18px",
         fontSize: 13, fontWeight: 700, cursor: "pointer",
@@ -216,7 +224,7 @@ const Navbar = ({ page, setPage }) => {
 };
 
 // ── LANDING PAGE ───────────────────────────────────────────────────────────
-const LandingPage = ({ setPage }) => {
+const LandingPage = ({ handleReportClick, handleVolunteerClick }) => {
   const [counts, setCounts] = useState({ vol: 0, waste: 0, reports: 0, cities: 0 });
 
   useEffect(() => {
@@ -280,12 +288,12 @@ const LandingPage = ({ setPage }) => {
         </p>
 
         <div className="fade-up" style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", animationDelay: "300ms" }}>
-          <button className="pulse-btn" onClick={() => setPage("reports")} style={{
+          <button className="pulse-btn" onClick={handleReportClick} style={{
             background: `linear-gradient(135deg, ${C.teal}, ${C.tealLight})`,
             color: "#000", border: "none", borderRadius: 12, padding: "14px 32px",
             fontSize: 16, fontWeight: 700, cursor: "pointer",
           }}>📷 Report Issue</button>
-          <button onClick={() => setPage("volunteer")} style={{
+          <button onClick={handleVolunteerClick} style={{
             background: "transparent", color: C.teal,
             border: `1px solid ${C.teal}`, borderRadius: 12, padding: "14px 32px",
             fontSize: 16, fontWeight: 600, cursor: "pointer",
@@ -357,7 +365,7 @@ const LandingPage = ({ setPage }) => {
             { icon: "🕳️", label: "Road Damage", count: "2,110 reports", color: C.red },
             { icon: "🚰", label: "Blocked Drain", count: "980 reports", color: "#a78bfa" },
           ].map((c, i) => (
-            <div key={i} className="card-hover" onClick={() => setPage("reports")} style={{
+            <div key={i} className="card-hover" onClick={handleReportClick} style={{
               flex: 1, minWidth: 200, background: C.card, border: `1px solid ${c.color}33`,
               borderRadius: 16, padding: 24, cursor: "pointer", textAlign: "center",
             }}>
@@ -379,7 +387,7 @@ const LandingPage = ({ setPage }) => {
           Ready to Make Your City <span style={{ color: C.teal }}>Cleaner?</span>
         </h2>
         <p style={{ color: C.muted, marginBottom: 32 }}>Join 4,000+ volunteers already making a difference across 24 Indian cities.</p>
-        <button onClick={() => setPage("reports")} style={{
+        <button onClick={handleVolunteerClick} style={{
           background: `linear-gradient(135deg, ${C.teal}, ${C.tealLight})`,
           color: "#000", border: "none", borderRadius: 12, padding: "16px 40px",
           fontSize: 17, fontWeight: 700, cursor: "pointer",
@@ -1208,46 +1216,65 @@ const GovtDashboard = () => {
 export default function App() {
   const [page, setPage] = useState("landing");
 
-  const pages = {
-    landing: <LandingPage setPage={setPage} />,
-    reports: <ReportsPage />,
-    volunteer: <VolunteerDashboard />,
-    govt: <GovtDashboard />,
-  };
-  async function addTestReport() {
-    try {
-      await addDoc(collection(db, "reports"), {
-        location: "Test Location",
-        description: "Garbage near road",
-        status: "pending"
-      });
-
-      alert("Report added to database");
-    } catch (error) {
-      console.error("Error:", error);
+  async function handleReportClick() {
+    const user = await loginUser();
+    if (user) {
+      setPage("reports");
     }
   }
+
+  async function handleVolunteerClick() {
+    const user = await loginUser();
+    if (user) {
+      setPage("volunteer");
+    }
+  }
+
+
+  async function handleGovClick() {
+  const user = await loginUser();
+  if (user) {
+    setPage("govt");
+  }
+}
+
+  const pages = {
+  landing: (
+    <LandingPage
+      handleReportClick={handleReportClick}
+      handleVolunteerClick={handleVolunteerClick}
+    />
+  ),
+  reports: (
+  <iframe
+    src="/friend-ui.html"
+    title="dashboard"
+    style={{
+      width: "100%",
+      height: "100vh",
+      border: "none"
+    }}
+  />
+),
+  volunteer: <FriendUI />,
+  govt: <FriendUI />,
+};
+
 
 return (
   <>
     <FontLink />
     <div style={{ background: C.bg, minHeight: "100vh", color: C.text }}>
-      <Navbar page={page} setPage={setPage} />
+     c<Navbar
+  page={page}
+  setPage={setPage}
+  handleReportClick={handleReportClick}
+  handleVolunteerClick={handleVolunteerClick}
+  handleGovClick={handleGovClick}
+/>
 
       <div style={{ padding: "20px" }}>
-        <button
-          onClick={addTestReport}
-          style={{
-            padding: "10px 20px",
-            background: "green",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            cursor: "pointer"
-          }}
-        >
-          Test Firebase Upload
-        </button>
+
       </div>
 
       {pages[page]}
