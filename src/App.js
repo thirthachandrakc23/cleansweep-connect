@@ -1260,20 +1260,22 @@ export default function App() {
 
 }
 
-  async function handleReportClick() {
+ async function handleLoginRole(role) {
+
   const user = await loginUser();
-  if (user) {
-    window.location.href = "/friend-ui.html?role=citizen";
-  }
+
+  if (!user) return;
+
+  window.location.href = "/friend-ui.html?role=" + role;
+}
+
+async function handleReportClick() {
+  handleLoginRole("citizen");
 }
 
 async function handleVolunteerClick() {
-  const user = await loginUser();
-  if (user) {
-    window.location.href = "/friend-ui.html?role=volunteer";
-  }
+  handleLoginRole("volunteer");
 }
-
 async function handleGovClick() {
   const user = await loginUser();
   if (user) {
