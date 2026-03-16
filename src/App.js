@@ -1238,131 +1238,120 @@ const GovtDashboard = () => {
 
 // ── ROOT APP ───────────────────────────────────────────────────────────────
 export default function App() {
+
   const [page, setPage] = useState("landing");
 
   const roleBtn = {
-  width: "100%",
-  padding: "12px",
-  marginTop: "15px",
-  borderRadius: "8px",
-  border: "none",
-  background: "#22c55e",
-  cursor: "pointer",
-  fontWeight: "bold"
-};
+    width: "100%",
+    padding: "12px",
+    marginTop: "15px",
+    borderRadius: "8px",
+    border: "none",
+    background: "#22c55e",
+    cursor: "pointer",
+    fontWeight: "bold"
+  };
+
   async function handleLoginRole(role) {
+    const user = await loginUser();
 
-  const user = await loginUser();
+    if (!user) return;
 
-  if (!user) return;
-
-  window.location.href = "/friend-ui.html?role=" + role;
-
-}
-
- async function handleLoginRole(role) {
-
-  const user = await loginUser();
-
-  if (!user) return;
-
-  window.location.href = "/friend-ui.html?role=" + role;
-}
-
-async function handleReportClick() {
-  handleLoginRole("citizen");
-}
-
-async function handleVolunteerClick() {
-  handleLoginRole("volunteer");
-}
-async function handleGovClick() {
-  const user = await loginUser();
-  if (user) {
-    window.location.href = "/friend-ui.html?role=govt";
+    window.location.href = "/friend-ui.html?role=" + role;
   }
-}
+
+  async function handleReportClick() {
+    handleLoginRole("citizen");
+  }
+
+  async function handleVolunteerClick() {
+    handleLoginRole("volunteer");
+  }
+
+  async function handleGovClick() {
+    handleLoginRole("govt");
+  }
 
   const pages = {
 
+    login: (
+      <div style={{padding:"120px 40px", maxWidth:400, margin:"auto", textAlign:"center"}}>
 
-  login: (
-  <div style={{padding:"120px 40px", maxWidth:400, margin:"auto", textAlign:"center"}}>
+        <h2>Select Role to Login</h2>
 
-    <h2>Select Role to Login</h2>
+        <button onClick={() => handleLoginRole("citizen")} style={roleBtn}>
+          Citizen
+        </button>
 
-    <button onClick={() => handleLoginRole("citizen")} style={roleBtn}>
-      Citizen
-    </button>
+        <button onClick={() => handleLoginRole("volunteer")} style={roleBtn}>
+          Volunteer
+        </button>
 
-    <button onClick={() => handleLoginRole("volunteer")} style={roleBtn}>
-      Volunteer
-    </button>
+        <button onClick={() => handleLoginRole("govt")} style={roleBtn}>
+          Government
+        </button>
 
-    <button onClick={() => handleLoginRole("govt")} style={roleBtn}>
-      Government
-    </button>
-
-    <button
-      onClick={() => setPage("landing")}
-      style={{
-        width:"100%",
-        padding:"10px",
-        marginTop:"20px",
-        borderRadius:"8px",
-        border:"1px solid #22c55e",
-        background:"transparent",
-        color:"#22c55e",
-        cursor:"pointer"
-      }}
-    >
-      Back
-    </button>
-
-  </div>
-),  
-  landing: (
-    <LandingPage
-      handleReportClick={handleReportClick}
-      handleVolunteerClick={handleVolunteerClick}
-    />
-  ),
-  reports: (
-  <iframe
-    src="/friend-ui.html"
-    title="dashboard"
-    style={{
-      width: "100%",
-      height: "100vh",
-      border: "none"
-    }}
-  />
-),
-  volunteer: <FriendUI />,
-  govt: <FriendUI />,
-};
-
-
-return (
-  <>
-    <FontLink />
-    <div style={{ background: C.bg, minHeight: "100vh", color: C.text }}>
-     c<Navbar
-  page={page}
-  setPage={setPage}
-  handleReportClick={handleReportClick}
-  handleVolunteerClick={handleVolunteerClick}
-  handleGovClick={handleGovClick}
-/>
-
-      <div style={{ padding: "20px" }}>
+        <button
+          onClick={() => setPage("landing")}
+          style={{
+            width:"100%",
+            padding:"10px",
+            marginTop:"20px",
+            borderRadius:"8px",
+            border:"1px solid #22c55e",
+            background:"transparent",
+            color:"#22c55e",
+            cursor:"pointer"
+          }}
+        >
+          Back
+        </button>
 
       </div>
+    ),
 
-      {pages[page]}
-    </div>
-  </>
-);
+    landing: (
+      <LandingPage
+        handleReportClick={handleReportClick}
+        handleVolunteerClick={handleVolunteerClick}
+      />
+    ),
+
+    reports: (
+      <iframe
+        src="/friend-ui.html"
+        title="dashboard"
+        style={{
+          width: "100%",
+          height: "100vh",
+          border: "none"
+        }}
+      />
+    ),
+
+    volunteer: <FriendUI />,
+    govt: <FriendUI />,
+  };
+
+  return (
+    <>
+      <FontLink />
+
+      <div style={{ background: C.bg, minHeight: "100vh", color: C.text }}>
+
+        <Navbar
+          page={page}
+          setPage={setPage}
+          handleReportClick={handleReportClick}
+          handleVolunteerClick={handleVolunteerClick}
+          handleGovClick={handleGovClick}
+        />
+
+        {pages[page]}
+
+      </div>
+    </>
+  );
 }
 
 
