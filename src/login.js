@@ -7,10 +7,8 @@ const provider = new GoogleAuthProvider();
 export async function loginUser() {
   try {
     const result = await signInWithPopup(auth, provider);
-
     const user = result.user;
 
-    // save user to Firestore
     await setDoc(doc(db, "users", user.uid), {
       name: user.displayName,
       email: user.email,
@@ -18,11 +16,10 @@ export async function loginUser() {
       uid: user.uid
     });
 
-    // store locally
     localStorage.setItem("name", user.displayName);
     localStorage.setItem("photo", user.photoURL);
 
-    return user;   // VERY IMPORTANT
+    return user;
 
   } catch (error) {
     console.log(error);
