@@ -794,20 +794,1939 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  gap: 6px;
 }
 
+.photo-slot:hover {
+  background: rgba(0,255,212,0.07);
+  border-color: var(--teal-dim);
+}
+
+.photo-slot-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-faint);
+  letter-spacing: 1px;
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.progress-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--emerald));
+  box-shadow: 0 0 8px var(--teal);
+  transition: width 0.5s ease;
+}
+
+/* ============================================
+   TOGGLE SWITCH
+   ============================================ */
+.toggle {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  display: inline-block;
+}
+
+.toggle input { display: none; }
+
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 11px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+
+.toggle input:checked + .toggle-track {
+  background: linear-gradient(90deg, rgba(0,255,212,0.3), rgba(0,230,118,0.2));
+  border-color: var(--teal);
+  box-shadow: 0 0 10px rgba(0,255,212,0.2);
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 16px; height: 16px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.toggle input:checked ~ .toggle-thumb {
+  left: 23px;
+  background: var(--teal);
+  box-shadow: 0 0 8px var(--teal);
+}
+
+/* ============================================
+   BEFORE/AFTER PANELS
+   ============================================ */
+.ba-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ba-slot {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16/9;
+}
+
+.ba-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ba-label {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(0deg, rgba(0,0,0,0.8), transparent);
+}
+
+.ba-label.before { color: var(--amber); }
+.ba-label.after { color: var(--emerald); }
+
+.ba-ai-badge {
+  position: absolute;
+  top: 6px; right: 6px;
+  background: rgba(0,230,118,0.2);
+  border: 1px solid var(--emerald);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--emerald);
+  letter-spacing: 1px;
+}
+
+/* ============================================
+   DISPATCH PANEL
+   ============================================ */
+.dispatch-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(0,255,212,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+
+.dispatch-item:hover { background: rgba(0,255,212,0.06); border-color: var(--teal-dim); }
+
+.dispatch-icon {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.dispatch-icon.truck { background: rgba(0,255,212,0.1); border: 1px solid rgba(0,255,212,0.2); }
+.dispatch-icon.team  { background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.2); }
+
+.dispatch-info { flex: 1; }
+.dispatch-name { font-size: 12px; font-weight: 500; }
+.dispatch-detail { font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); margin-top: 1px; }
+
+/* ============================================
+   ANALYTICS BARS
+   ============================================ */
+.analytics-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.analytics-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.analytics-bar-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.analytics-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
+.analytics-val {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  width: 35px;
+  text-align: right;
+  color: var(--text-dim);
+}
+
+/* ============================================
+   SECTION HEADING
+   ============================================ */
+.section-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.section-heading {
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+}
+
+.section-divider {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* ============================================
+   VOLUNTEER TASK CARD
+   ============================================ */
+.task-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.task-card:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,255,212,0.08);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.task-title { font-size: 13px; font-weight: 600; }
+.task-meta { font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); margin-top: 2px; }
+
+.volunteers-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.vol-avatars {
+  display: flex;
+}
+
+.vol-avatar {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0a2a3a, #0d3d30);
+  border: 2px solid var(--bg-deep);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  margin-left: -6px;
+}
+
+.vol-avatar:first-child { margin-left: 0; }
+
+.vol-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+/* ============================================
+   NOTIFICATION TOAST
+   ============================================ */
+.toast-container {
+  position: fixed;
+  top: 70px; right: 16px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  background: rgba(8,20,32,0.97);
+  border: 1px solid var(--teal);
+  border-radius: 10px;
+  padding: 12px 16px;
+  max-width: 300px;
+  box-shadow: 0 0 24px rgba(0,255,212,0.15);
+  animation: toastIn 0.4s ease, toastOut 0.4s ease 3.6s forwards;
+  pointer-events: auto;
+}
+
+@keyframes toastIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+.toast-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--teal);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.toast-body { font-size: 12px; color: var(--text-primary); }
+
+/* ============================================
+   LIVE INDICATOR
+   ============================================ */
+.live-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--emerald);
+  letter-spacing: 1px;
+}
+
+.live-dot::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 6px var(--emerald);
+  animation: pulse 1.5s infinite;
+}
+
+/* ============================================
+   MODAL
+   ============================================ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.open { display: flex; animation: fadeIn 0.2s; }
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  max-width: 520px;
+  width: 90%;
+  box-shadow: 0 0 60px rgba(0,255,212,0.1);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-family: var(--font-head);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-close {
+  float: right;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.modal-close:hover { color: var(--red); }
+
+/* ============================================
+   HEATMAP ZONES
+   ============================================ */
+.heatmap-zone {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+/* ============================================
+   CHART (CSS ONLY)
+   ============================================ */
+.mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 50px;
+}
+
+.chart-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.5s ease;
+  min-width: 8px;
+}
+
+/* ============================================
+   UTILITY
+   ============================================ */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mb-2 { margin-bottom: 8px; }
+.text-teal { color: var(--teal); }
+.text-dim { color: var(--text-dim); }
+.text-faint { color: var(--text-faint); }
+.text-mono { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; }
+.text-head { font-family: var(--font-head); }
+.text-sm { font-size: 12px; }
+.text-xs { font-size: 10px; }
+.font-600 { font-weight: 600; }
+.w-full { width: 100%; }
+.separator { height: 1px; background: var(--border); margin: 12px 0; }
+.glow-teal { text-shadow: 0 0 20px var(--teal); }
+.overflow-hidden { overflow: hidden; }
+.relative { position: relative; }
+.tag { padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; }
+.tag-teal { background: rgba(0,255,212,0.1); color: var(--teal); border: 1px solid rgba(0,255,212,0.2); }
+.tag-amber { background: rgba(255,179,0,0.1); color: var(--amber); border: 1px solid rgba(255,179,0,0.2); }
+.tag-blue { background: rgba(26,143,255,0.1); color: var(--blue); border: 1px solid rgba(26,143,255,0.2); }
+.spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-1-2, .grid-2-1, .grid-3-2 { grid-template-columns: 1fr; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+  .topbar-right { display: none; }
+}
+
+@media (max-width: 600px) {
+  .metric-grid { grid-template-columns: 1fr; }
+  .main-content { padding: 12px; }
+  .topbar { padding: 10px 14px; }
+  .role-tabs { gap: 2px; }
+  .role-tab { padding: 6px 10px; font-size: 10px; }
+}
 </style>
 </head>
-
 <body>
 
-<div class="topbar">
-  <div class="logo-text">CleanSweep Connect</div>
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- REPORT MODAL -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('reportModal')">✕</button>
+    <div class="modal-title">📍 Report Civic Issue</div>
+
+    <div class="form-group">
+      <label class="form-label">Issue Type</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <button class="btn btn-secondary" id="typeGarbage" onclick="selectType('garbage')" style="padding:10px;font-size:11px;">🗑️ Garbage</button>
+        <button class="btn btn-secondary" id="typePothole" onclick="selectType('pothole')" style="padding:10px;font-size:11px;">🕳️ Pothole</button>
+        <button class="btn btn-secondary" id="typeFlood" onclick="selectType('flood')" style="padding:10px;font-size:11px;">🌊 Flooding</button>
+        <button class="btn btn-secondary" id="typeRoad" onclick="selectType('road')" style="padding:10px;font-size:11px;">🚧 Road Damage</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Location</label>
+      <div style="display:flex;gap:8px;">
+        <input class="form-input" id="reportLocation" value="Indira Nagar, Bengaluru" placeholder="Location..." style="flex:1;">
+        <button class="btn btn-primary btn-icon" onclick="autoDetect()" title="Auto-detect">📍</button>
+      </div>
+      <div style="background:#080e14;border:1px solid var(--border);border-radius:8px;height:100px;margin-top:8px;position:relative;overflow:hidden;">
+        <div class="map-grid"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <div class="map-marker garbage" style="position:relative;transform:none;animation:none;">📍</div>
+        </div>
+        <div class="map-label" style="bottom:6px;left:8px;">BENGALURU, KA</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="reportDesc" placeholder="Describe the issue in detail..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Upload Photos</label>
+      <div class="photo-upload">
+        <div class="photo-slot" onclick="simulateUpload('before')">
+          <span style="font-size:20px;">📷</span>
+          <span class="photo-slot-label" id="beforeLabel">BEFORE</span>
+        </div>
+        <div class="photo-slot" onclick="simulateUpload('after')">
+          <span style="font-size:20px;">📤</span>
+          <span class="photo-slot-label" id="afterLabel">AFTER (OPTIONAL)</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-lg w-full" onclick="submitReport()">
+      🚀 SUBMIT REPORT
+    </button>
+  </div>
 </div>
 
-<div class="main-content active">
-  <h1 style="padding:40px">Dashboard Loaded Successfully 🚀</h1>
+<!-- MAIN APP -->
+<div id="app">
+
+  <!-- TOP NAV -->
+  <nav class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-icon">🌐</div>
+      <div>
+        <div class="logo-text">CLEAN SWEEP CONNECT</div>
+        <span class="logo-sub">BENGALURU CIVIC PLATFORM</span>
+      </div>
+    </div>
+
+    <div class="role-tabs">
+      <button class="role-tab active" onclick="switchRole('citizen')">👤 Citizen</button>
+      <button class="role-tab" onclick="switchRole('volunteer')">🤝 Volunteer</button>
+      <button class="role-tab" onclick="switchRole('admin')">🏛️ Command</button>
+    </div>
+
+    <div class="topbar-right">
+      <div class="stat-pill">
+        <div class="dot"></div>
+        <span>LIVE · 1,673 Issues</span>
+      </div>
+      <div class="stat-pill">⚡ 230 Active</div>
+      <div class="avatar">
+  <img id="userPhoto" width="32" height="32" style="border-radius:50%">
 </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       CITIZEN DASHBOARD
+       ========================================== -->
+  <div class="main-content active" id="view-citizen">
+
+    <div class="section-row" style="margin-bottom:18px;">
+      <div>
+        <div class="section-heading">Citizen Dashboard</div>
+        <div class="text-mono text-faint" style="margin-top:3px;">WELCOME BACK, AAMAN · INDIRA NAGAR ZONE</div>
+      </div>
+      <div class="section-divider"></div>
+      <button class="btn btn-primary btn-lg" onclick="openModal('reportModal')">
+        ＋ REPORT ISSUE
+      </button>
+    </div>
+
+    <!-- METRICS -->
+    <div class="metric-grid">
+      <div class="metric-card teal">
+        <div class="metric-icon">📊</div>
+        <div class="metric-label">My Reports</div>
+        <div class="metric-value">24</div>
+        <div class="metric-sub">↑ 3 THIS WEEK</div>
+      </div>
+      <div class="metric-card emerald">
+        <div class="metric-icon">✅</div>
+        <div class="metric-label">Resolved</div>
+        <div class="metric-value">19</div>
+        <div class="metric-sub">79% RESOLUTION RATE</div>
+      </div>
+      <div class="metric-card amber">
+        <div class="metric-icon">⏳</div>
+        <div class="metric-label">Pending</div>
+        <div class="metric-value">5</div>
+        <div class="metric-sub">AVG 2.3 DAYS WAIT</div>
+      </div>
+    </div>
+
+    <div class="grid-3-2" style="margin-bottom:14px;">
+      <!-- MY REPORTS LIST -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📋 My Active Reports</div>
+          <div class="live-dot">LIVE</div>
+        </div>
+
+        <div class="issue-list">
+          <div class="issue-item" onclick="showIssueDetail('garbage')">
+            <div class="issue-icon garbage">🗑️</div>
+            <div class="issue-info">
+              <div class="issue-title">Large Garbage Pile — Alley #4</div>
+              <div class="issue-loc">📍 Indira Nagar, 5th Cross · Reported 2h ago</div>
+              <div style="margin-top:5px;">
+                <div class="progress-bar" style="height:3px;">
+                  <div class="progress-fill" style="width:75%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="issue-actions">
+              <span class="badge progress">IN PROGRESS</span>
+            </div>
+          </div>
+
+          <div class="issue-item" onclick="showIssueDetail('pothole')">
+            <div class="issue-icon pothole">🕳️</div>
+            <div class="issue-info">
+              <div class="issue-title">Pothole — MG Road Junction</div>
+              <div class="issue-loc">📍 MG Road · Reported 1d ago</div>
+              <div style="margin-top:5px;">
+                <div class="progress-bar" style="height:3px;">
+                  <div class="progress-fill" style="width:40%;background:linear-gradient(90deg,var(--amber),var(--red));"></div>
+                </div>
+              </div>
+            </div>
+            <div class="issue-actions">
+              <span class="badge reported">REPORTED</span>
+            </div>
+          </div>
+
+          <div class="issue-item">
+            <div class="issue-icon flood">🌊</div>
+            <div class="issue-info">
+              <div class="issue-title">Waterlogging — Main Market</div>
+              <div class="issue-loc">📍 Commercial Street · Reported 3d ago</div>
+              <div style="margin-top:5px;">
+                <div class="progress-bar" style="height:3px;">
+                  <div class="progress-fill" style="width:100%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="issue-actions">
+              <span class="badge resolved">RESOLVED</span>
+            </div>
+          </div>
+
+          <div class="issue-item">
+            <div class="issue-icon road">🚧</div>
+            <div class="issue-info">
+              <div class="issue-title">Road Damage — CMH Road</div>
+              <div class="issue-loc">📍 CMH Road · Reported 5d ago</div>
+              <div style="margin-top:5px;">
+                <div class="progress-bar" style="height:3px;">
+                  <div class="progress-fill" style="width:90%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="issue-actions">
+              <span class="badge dispatched">DISPATCHED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <!-- BEFORE / AFTER -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔍 Before / After Verification</div>
+            <span class="badge verified">AI VERIFIED</span>
+          </div>
+          <div class="ba-panel">
+            <div class="ba-slot" style="background:linear-gradient(135deg,#1a0a00,#2d1200);">
+              <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.4;">🗑️</div>
+              <div class="ba-label before">BEFORE</div>
+            </div>
+            <div class="ba-slot" style="background:linear-gradient(135deg,#001a0a,#002d12);">
+              <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.4;">✨</div>
+              <div class="ba-ai-badge">AI ✓</div>
+              <div class="ba-label after">AFTER</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);">
+            Issue #1682 · Alley #4 Garbage Pile · 
+            <span style="color:var(--emerald);">CLEARED ✓</span>
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔔 Notifications</div>
+            <span class="tag tag-amber">3 NEW</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="padding:8px;background:rgba(0,230,118,0.04);border:1px solid rgba(0,230,118,0.15);border-radius:8px;">
+              <div style="font-size:11px;color:var(--emerald);font-weight:600;">✅ Issue Resolved</div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-faint);margin-top:2px;">Waterlogging at Main Market cleared · 2h ago</div>
+            </div>
+            <div style="padding:8px;background:rgba(26,143,255,0.04);border:1px solid rgba(26,143,255,0.15);border-radius:8px;">
+              <div style="font-size:11px;color:var(--blue);font-weight:600;">🚛 Team Dispatched</div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-faint);margin-top:2px;">Govt. team en route to CMH Road · 5h ago</div>
+            </div>
+            <div style="padding:8px;background:rgba(255,179,0,0.04);border:1px solid rgba(255,179,0,0.15);border-radius:8px;">
+              <div style="font-size:11px;color:var(--amber);font-weight:600;">🤝 Volunteers Joined</div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-faint);margin-top:2px;">3 volunteers assigned to your Alley #4 report · 1d ago</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">⚡ Quick Actions</div></div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="btn btn-primary w-full" onclick="openModal('reportModal')">📍 Report New Issue</button>
+            <button class="btn btn-secondary w-full" onclick="showToast('Rewards', 'You have 240 civic points! Keep going 🌟')">🎁 View My Rewards (240 pts)</button>
+            <button class="btn btn-secondary w-full" onclick="switchRole('volunteer')">🤝 Switch to Volunteer</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CITY MAP + TRACK -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🗺️ Live Incident Map — My Zone</div>
+          <div class="live-dot">TRACKING</div>
+        </div>
+        <div class="map-container" style="height:260px;">
+          <div class="map-grid"></div>
+          <!-- Road lines -->
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12" viewBox="0 0 400 260">
+            <line x1="0" y1="130" x2="400" y2="130" stroke="#00FFD4" stroke-width="8"/>
+            <line x1="200" y1="0" x2="200" y2="260" stroke="#00FFD4" stroke-width="8"/>
+            <line x1="0" y1="70" x2="400" y2="70" stroke="#00FFD4" stroke-width="4"/>
+            <line x1="0" y1="190" x2="400" y2="190" stroke="#00FFD4" stroke-width="4"/>
+            <line x1="100" y1="0" x2="100" y2="260" stroke="#00FFD4" stroke-width="4"/>
+            <line x1="300" y1="0" x2="300" y2="260" stroke="#00FFD4" stroke-width="4"/>
+          </svg>
+          <!-- Heatmap zones -->
+          <div class="heatmap-zone" style="width:80px;height:80px;background:rgba(255,179,0,0.15);top:80px;left:80px;"></div>
+          <div class="heatmap-zone" style="width:60px;height:60px;background:rgba(255,68,68,0.12);top:120px;left:220px;"></div>
+          <!-- Markers -->
+          <div class="map-marker garbage" style="top:90px;left:100px;" title="Garbage">🗑️</div>
+          <div class="map-marker pothole" style="top:130px;left:230px;" title="Pothole">🕳️</div>
+          <div class="map-marker flood" style="top:55px;left:290px;" title="Flooding">🌊</div>
+          <div class="map-marker road" style="top:175px;left:160px;" title="Road">🚧</div>
+          <div class="map-marker garbage" style="top:50px;left:150px;" title="Garbage">🗑️</div>
+          <!-- User location -->
+          <div style="position:absolute;top:100px;left:178px;width:16px;height:16px;border-radius:50%;background:var(--blue);border:3px solid white;box-shadow:0 0 0 6px rgba(26,143,255,0.2);"></div>
+
+          <div class="map-label" style="top:8px;left:12px;">INDIRA NAGAR</div>
+          <div class="map-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--amber);"></div>Garbage</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--red);"></div>Pothole</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue);"></div>Flooding</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--purple);"></div>Road</div>
+          </div>
+          <div class="map-controls">
+            <div class="map-btn">＋</div>
+            <div class="map-btn">－</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ISSUE TRACKING TIMELINE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📡 Issue #1682 — Status Timeline</div>
+          <span class="badge dispatched">DISPATCHED</span>
+        </div>
+
+        <div style="padding:8px 0;">
+          <div class="flex gap-2 items-center" style="padding:8px 0;border-left:2px solid var(--teal);padding-left:16px;margin-left:8px;position:relative;">
+            <div style="position:absolute;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);"></div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--teal);">Report Submitted</div>
+              <div class="text-mono text-faint">March 14, 2026 · 09:41 AM</div>
+            </div>
+          </div>
+          <div class="flex gap-2 items-center" style="padding:8px 0;border-left:2px solid var(--emerald);padding-left:16px;margin-left:8px;position:relative;margin-top:4px;">
+            <div style="position:absolute;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);"></div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--emerald);">Validated by Admin</div>
+              <div class="text-mono text-faint">March 14, 2026 · 10:05 AM</div>
+            </div>
+          </div>
+          <div class="flex gap-2 items-center" style="padding:8px 0;border-left:2px solid var(--blue);padding-left:16px;margin-left:8px;position:relative;margin-top:4px;">
+            <div style="position:absolute;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);"></div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--blue);">Volunteers Alerted (3 joined)</div>
+              <div class="text-mono text-faint">March 14, 2026 · 10:12 AM</div>
+            </div>
+          </div>
+          <div class="flex gap-2 items-center" style="padding:8px 0;border-left:2px solid var(--amber);padding-left:16px;margin-left:8px;position:relative;margin-top:4px;">
+            <div style="position:absolute;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);"></div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--amber);">Govt. Truck Dispatched</div>
+              <div class="text-mono text-faint">March 14, 2026 · 11:30 AM</div>
+            </div>
+          </div>
+          <div class="flex gap-2 items-center" style="padding:8px 0;border-left:2px dashed var(--border);padding-left:16px;margin-left:8px;position:relative;margin-top:4px;opacity:0.5;">
+            <div style="position:absolute;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--border);"></div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--text-dim);">Work in Progress</div>
+              <div class="text-mono text-faint">Est. completion: Tonight</div>
+            </div>
+          </div>
+          <div class="flex gap-2 items-center" style="padding:8px 0;border-left:2px dashed var(--border);padding-left:16px;margin-left:8px;position:relative;margin-top:4px;opacity:0.3;">
+            <div style="position:absolute;left:-6px;width:12px;height:12px;border-radius:50%;background:var(--border);"></div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--text-dim);">AI Verification & Closure</div>
+              <div class="text-mono text-faint">Pending</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="separator"></div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-secondary" style="flex:1;" onclick="showToast('Chat', 'Issue chat opened!')">💬 Contact Team</button>
+          <button class="btn btn-amber" style="flex:1;" onclick="showToast('Escalated', 'Issue escalated to supervisor!')">⚠️ Escalate</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==========================================
+       VOLUNTEER DASHBOARD
+       ========================================== -->
+  <div class="main-content" id="view-volunteer">
+
+    <div class="section-row" style="margin-bottom:18px;">
+      <div>
+        <div class="section-heading">Volunteer Connect</div>
+        <div class="text-mono text-faint" style="margin-top:3px;">NSS TEAM HEAD · RANK #1 · 32 POINTS</div>
+      </div>
+      <div class="section-divider"></div>
+      <div class="flex gap-2">
+        <div class="stat-pill" style="border-color:rgba(0,255,212,0.3);">
+          <span style="color:var(--teal);">⭐ 32 pts</span>
+        </div>
+        <div class="stat-pill">🤝 15 tasks done</div>
+      </div>
+    </div>
+
+    <!-- METRICS -->
+    <div class="metric-grid">
+      <div class="metric-card teal">
+        <div class="metric-icon">🤝</div>
+        <div class="metric-label">Tasks Joined</div>
+        <div class="metric-value">15</div>
+        <div class="metric-sub">↑ 2 THIS WEEK</div>
+      </div>
+      <div class="metric-card emerald">
+        <div class="metric-icon">✅</div>
+        <div class="metric-label">Completed</div>
+        <div class="metric-value">12</div>
+        <div class="metric-sub">80% COMPLETION RATE</div>
+      </div>
+      <div class="metric-card amber">
+        <div class="metric-icon">📍</div>
+        <div class="metric-label">Nearby Issues</div>
+        <div class="metric-value">7</div>
+        <div class="metric-sub">WITHIN 1KM RADIUS</div>
+      </div>
+    </div>
+
+    <div class="grid-1-2" style="margin-bottom:14px;">
+
+      <!-- LEFT SIDEBAR -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <!-- FILTER -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔍 Filter Issues</div></div>
+          <input class="form-input" placeholder="Search issues..." style="margin-bottom:10px;">
+          <div class="form-group" style="margin-bottom:10px;">
+            <label class="form-label">Category</label>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
+                <input type="checkbox" checked style="accent-color:var(--teal);"> 🗑️ Garbage
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
+                <input type="checkbox" checked style="accent-color:var(--teal);"> 🕳️ Potholes
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
+                <input type="checkbox" style="accent-color:var(--teal);"> 🌊 Flooding
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
+                <input type="checkbox" style="accent-color:var(--teal);"> 🚧 Road Damage
+              </label>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Location Radius: 10km</label>
+            <input type="range" min="1" max="25" value="10" style="width:100%;accent-color:var(--teal);">
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-faint);margin-top:3px;">
+              <span>5km</span><span>10km</span><span>25km</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MY TASKS -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">⚡ My Active Tasks</div></div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="padding:10px;background:rgba(255,179,0,0.04);border:1px solid rgba(255,179,0,0.2);border-radius:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="font-size:11px;font-weight:600;">🌊 Flooding in Market</div>
+                <span class="tag tag-amber">ACTIVE</span>
+              </div>
+              <div class="text-mono text-faint" style="margin-top:3px;">3/5 volunteers joined</div>
+              <div class="progress-bar" style="margin-top:6px;">
+                <div class="progress-fill" style="width:60%;"></div>
+              </div>
+            </div>
+            <div style="padding:10px;background:rgba(0,255,212,0.04);border:1px solid rgba(0,255,212,0.15);border-radius:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="font-size:11px;font-weight:600;">🗑️ Garbage — Alley #4</div>
+                <span class="tag tag-teal">LEADER</span>
+              </div>
+              <div class="text-mono text-faint" style="margin-top:3px;">5/5 volunteers · In Progress</div>
+              <div class="progress-bar" style="margin-top:6px;">
+                <div class="progress-fill" style="width:100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEADERBOARD -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🏆 Leaderboard</div>
+            <span class="tag tag-teal">THIS MONTH</span>
+          </div>
+          <div class="leaderboard-list">
+            <div class="lb-item" style="background:rgba(255,215,0,0.05);border-color:rgba(255,215,0,0.2);">
+              <div class="lb-rank gold">1</div>
+              <div class="lb-avatar">A</div>
+              <div class="lb-info">
+                <div class="lb-name">Aaman <span style="font-size:9px;color:var(--teal);font-family:var(--font-mono);">· NSS HEAD</span></div>
+                <div class="lb-sub">15 tasks · 15 volunteers recruited</div>
+              </div>
+              <div class="lb-pts">32</div>
+            </div>
+            <div class="lb-item">
+              <div class="lb-rank silver">2</div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#1a0a1a,#2d102d);">N</div>
+              <div><div class="lb-name">Anmari</div><div class="lb-sub">12 volunteers</div></div>
+              <div class="lb-pts" style="color:var(--blue);">13</div>
+            </div>
+            <div class="lb-item">
+              <div class="lb-rank bronze">3</div>
+              <div class="lb-avatar" style="background:linear-gradient(135deg,#0a1a0a,#102d10);">B</div>
+              <div><div class="lb-name">Abtumand</div><div class="lb-sub">7 volunteers</div></div>
+              <div class="lb-pts" style="color:var(--amber);">12</div>
+            </div>
+            <div class="lb-item">
+              <div class="lb-rank">4</div>
+              <div class="lb-avatar">S</div>
+              <div><div class="lb-name">Samahi</div><div class="lb-sub">7 volunteers</div></div>
+              <div class="lb-pts">11</div>
+            </div>
+            <div class="lb-item">
+              <div class="lb-rank">5</div>
+              <div class="lb-avatar">D</div>
+              <div><div class="lb-name">Dahri</div><div class="lb-sub">2 volunteers</div></div>
+              <div class="lb-pts">10</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VOLUNTEER OPPORTUNITIES + CHAT -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <!-- OPPORTUNITIES FEED -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🎯 Volunteer Opportunities</div>
+            <div class="live-dot">7 NEARBY</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;">
+
+            <!-- TASK CARD 1 -->
+            <div class="task-card">
+              <div class="task-header">
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span class="tag tag-amber">POST #1682</span>
+                    <span class="text-mono text-faint">NSS Team 14 · 2d ago</span>
+                  </div>
+                  <div class="task-title">🗑️ Major Alley Garbage Pile</div>
+                  <div class="task-meta">Indira Nagar, 5th Cross · Approx. 50kg debris</div>
+                </div>
+                <div>
+                  <label class="toggle">
+                    <input type="checkbox" checked>
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb"></div>
+                  </label>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:8px;margin:10px 0;">
+                <div style="width:80px;height:60px;background:linear-gradient(135deg,#1a0a00,#3d1900);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:28px;opacity:0.5;border:1px solid rgba(255,179,0,0.2);">🗑️</div>
+                <div style="flex:1;background:rgba(0,255,212,0.03);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;opacity:0.4;color:var(--text-faint);">📍 MAP</div>
+              </div>
+
+              <div class="volunteers-bar">
+                <div class="vol-avatars">
+                  <div class="vol-avatar" style="background:linear-gradient(135deg,#0a2a3a,#0d3d30);">A</div>
+                  <div class="vol-avatar" style="background:linear-gradient(135deg,#1a0a1a,#2d102d);">N</div>
+                  <div class="vol-avatar" style="background:linear-gradient(135deg,#0a1a0a,#102d10);">B</div>
+                </div>
+                <div class="vol-count">3/5 volunteers joined</div>
+                <div style="flex:1;"></div>
+                <button class="btn btn-primary" onclick="joinTask(1)" id="joinBtn1">🤝 VOLUNTEER +</button>
+              </div>
+              <div class="progress-bar" style="margin-top:8px;">
+                <div class="progress-fill" style="width:60%;"></div>
+              </div>
+            </div>
+
+            <!-- TASK CARD 2 -->
+            <div class="task-card">
+              <div class="task-header">
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span class="tag tag-teal">POST #1695</span>
+                    <span class="text-mono text-faint">NSS Team 14 · 1d ago</span>
+                  </div>
+                  <div class="task-title">🕳️ Pothole — MG Road Junction</div>
+                  <div class="task-meta">MG Road · Deep pothole, traffic hazard</div>
+                </div>
+              </div>
+
+              <div class="volunteers-bar">
+                <div class="vol-avatars">
+                  <div class="vol-avatar">S</div>
+                  <div class="vol-avatar">D</div>
+                  <div class="vol-avatar">R</div>
+                  <div class="vol-avatar">M</div>
+                  <div class="vol-avatar">K</div>
+                </div>
+                <div class="vol-count" style="color:var(--emerald);">5/5 FULL</div>
+                <div style="flex:1;"></div>
+                <button class="btn btn-secondary" disabled style="opacity:0.5;cursor:not-allowed;">TEAM FULL</button>
+              </div>
+              <div class="progress-bar" style="margin-top:8px;">
+                <div class="progress-fill" style="width:100%;background:linear-gradient(90deg,var(--emerald),var(--teal));"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TEAM REAL-TIME CHAT -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">💬 Team Chat — Issue #1682</div>
+            <div class="live-dot">LIVE</div>
+          </div>
+          <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-msg">
+                <div class="chat-avatar">A</div>
+                <div>
+                  <div class="chat-sender">AAMAN · LEADER</div>
+                  <div class="chat-bubble">Everyone please meet at Indira Nagar 5th Cross at 9AM tomorrow with gloves and bags.</div>
+                  <div class="chat-time">09:12 AM</div>
+                </div>
+              </div>
+              <div class="chat-msg">
+                <div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a1a,#2d102d);">N</div>
+                <div>
+                  <div class="chat-sender">ANMARI</div>
+                  <div class="chat-bubble">Confirmed! I'll bring extra trash bags. Should we coordinate with the garbage truck?</div>
+                  <div class="chat-time">09:15 AM</div>
+                </div>
+              </div>
+              <div class="chat-msg own">
+                <div class="chat-avatar">Me</div>
+                <div>
+                  <div class="chat-sender" style="text-align:right;color:var(--emerald);">YOU</div>
+                  <div class="chat-bubble">Yes! Admin confirmed Truck #405 will be on site by 9:30. Let's start sorting first.</div>
+                  <div class="chat-time" style="text-align:right;">09:18 AM</div>
+                </div>
+              </div>
+              <div class="chat-msg">
+                <div class="chat-avatar" style="background:linear-gradient(135deg,#0a1a0a,#102d10);">B</div>
+                <div>
+                  <div class="chat-sender">ABTUMAND</div>
+                  <div class="chat-bubble">I'll be there! Also bringing first aid kit just in case 🏥</div>
+                  <div class="chat-time">09:22 AM</div>
+                </div>
+              </div>
+            </div>
+            <div class="chat-input-row">
+              <input class="chat-input" id="chatInput" placeholder="Type message..." onkeydown="if(event.key==='Enter')sendChat()">
+              <button class="btn btn-primary btn-icon" onclick="sendChat()">➤</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPLOAD COMPLETION -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📸 Upload Completion Evidence</div>
+            <span class="tag tag-amber">LEADER ONLY</span>
+          </div>
+          <div class="photo-upload" style="margin-bottom:12px;">
+            <div class="photo-slot" onclick="showToast('Upload', 'Photo uploaded! AI verification started...')">
+              <span style="font-size:24px;">📷</span>
+              <span class="photo-slot-label">BEFORE PHOTO</span>
+            </div>
+            <div class="photo-slot" onclick="simulateAIVerification()">
+              <span style="font-size:24px;">✅</span>
+              <span class="photo-slot-label">AFTER PHOTO</span>
+            </div>
+          </div>
+          <div id="aiVerifyStatus" style="padding:10px;background:rgba(0,255,212,0.04);border:1px solid var(--border);border-radius:8px;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);">
+            🤖 AI VERIFICATION: Awaiting after-photo upload...
+          </div>
+          <button class="btn btn-primary w-full" style="margin-top:10px;" onclick="markComplete()">
+            🏁 MARK TASK COMPLETE
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==========================================
+       ADMIN / COMMAND CENTER DASHBOARD
+       ========================================== -->
+  <div class="main-content" id="view-admin">
+
+    <!-- COMMAND CENTER HEADER -->
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-family:var(--font-head);font-size:22px;font-weight:900;letter-spacing:4px;color:var(--teal);text-shadow:0 0 30px var(--teal);">
+        BBMP CIVIC COMMAND CENTER
+      </div>
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-faint);letter-spacing:3px;margin-top:4px;">
+        BENGALURU, INDIA · REAL-TIME OPERATIONS · MARCH 14, 2026
+      </div>
+    </div>
+
+    <!-- COMMAND METRICS -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;">
+      <div class="metric-card teal">
+        <div class="metric-icon">📋</div>
+        <div class="metric-label">Incoming Reports</div>
+        <div class="metric-value">1,673</div>
+        <div class="metric-sub">↑ 87 TODAY</div>
+      </div>
+      <div class="metric-card blue">
+        <div class="metric-icon">🚛</div>
+        <div class="metric-label">Active Dispatches</div>
+        <div class="metric-value">230</div>
+        <div class="metric-sub">47 EN-ROUTE</div>
+      </div>
+      <div class="metric-card emerald">
+        <div class="metric-icon">✅</div>
+        <div class="metric-label">Resolved Today</div>
+        <div class="metric-value">1,228</div>
+        <div class="metric-sub">73.4% RATE</div>
+      </div>
+      <div class="metric-card amber">
+        <div class="metric-icon">⚠️</div>
+        <div class="metric-label">Critical Issues</div>
+        <div class="metric-value">18</div>
+        <div class="metric-sub">REQUIRES ATTENTION</div>
+      </div>
+    </div>
+
+    <!-- MAIN 3-COLUMN LAYOUT -->
+    <div style="display:grid;grid-template-columns:1.2fr 2fr 1.2fr;gap:14px;margin-bottom:14px;">
+
+      <!-- LEFT: REPORTS QUEUE -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card" style="flex:1;">
+          <div class="card-header">
+            <div class="card-title">📥 Reports Queue</div>
+            <span class="tag tag-amber">18 PENDING</span>
+          </div>
+          <input class="form-input" placeholder="Search issues..." style="margin-bottom:10px;font-size:11px;">
+          <div class="issue-list">
+            <div class="issue-item">
+              <div class="issue-icon garbage">🗑️</div>
+              <div class="issue-info">
+                <div class="issue-title">Garbage Pile</div>
+                <div class="issue-loc">Pettlee · 2m ago</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <button class="btn btn-primary" style="padding:4px 8px;font-size:9px;" onclick="validateIssue(this)">VALIDATE</button>
+                <button class="btn btn-amber" style="padding:4px 8px;font-size:9px;" onclick="dispatchTruck(this)">DISPATCH</button>
+              </div>
+            </div>
+            <div class="issue-item">
+              <div class="issue-icon pothole">🕳️</div>
+              <div class="issue-info">
+                <div class="issue-title">Pothole</div>
+                <div class="issue-loc">Deodore · 5m ago</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <button class="btn btn-primary" style="padding:4px 8px;font-size:9px;" onclick="validateIssue(this)">VALIDATE</button>
+                <button class="btn btn-blue" style="padding:4px 8px;font-size:9px;" onclick="assignVolunteers(this)">VOLUNTEERS</button>
+              </div>
+            </div>
+            <div class="issue-item">
+              <div class="issue-icon flood">🌊</div>
+              <div class="issue-info">
+                <div class="issue-title">Flooding</div>
+                <div class="issue-loc">Pothore · 8m ago</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <button class="btn btn-primary" style="padding:4px 8px;font-size:9px;" onclick="validateIssue(this)">VALIDATE</button>
+                <button class="btn btn-danger" style="padding:4px 8px;font-size:9px;" onclick="markCritical(this)">CRITICAL</button>
+              </div>
+            </div>
+            <div class="issue-item">
+              <div class="issue-icon garbage">🗑️</div>
+              <div class="issue-info">
+                <div class="issue-title">Garbage Pile</div>
+                <div class="issue-loc">Indiranagar · 12m ago</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <button class="btn btn-primary" style="padding:4px 8px;font-size:9px;" onclick="validateIssue(this)">VALIDATE</button>
+                <button class="btn btn-amber" style="padding:4px 8px;font-size:9px;" onclick="dispatchTruck(this)">DISPATCH</button>
+              </div>
+            </div>
+            <div class="issue-item">
+              <div class="issue-icon road">🚧</div>
+              <div class="issue-info">
+                <div class="issue-title">Road Damage</div>
+                <div class="issue-loc">CMH Road · 18m ago</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <button class="btn btn-primary" style="padding:4px 8px;font-size:9px;" onclick="validateIssue(this)">VALIDATE</button>
+                <button class="btn btn-blue" style="padding:4px 8px;font-size:9px;" onclick="assignVolunteers(this)">VOLUNTEERS</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WARD DENSITY HEATMAP -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔥 Ward Density</div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div class="analytics-row" style="width:100%;">
+              <div class="analytics-label">Garbage</div>
+              <div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:85%;background:linear-gradient(90deg,var(--amber),#ff8c00);"></div></div>
+              <div class="analytics-val" style="color:var(--amber);">847</div>
+            </div>
+            <div class="analytics-row" style="width:100%;">
+              <div class="analytics-label">Potholes</div>
+              <div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:60%;background:linear-gradient(90deg,var(--red),#ff6666);"></div></div>
+              <div class="analytics-val" style="color:var(--red);">421</div>
+            </div>
+            <div class="analytics-row" style="width:100%;">
+              <div class="analytics-label">Flooding</div>
+              <div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:35%;background:linear-gradient(90deg,var(--blue),#66b2ff);"></div></div>
+              <div class="analytics-val" style="color:var(--blue);">247</div>
+            </div>
+            <div class="analytics-row" style="width:100%;">
+              <div class="analytics-label">Road</div>
+              <div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:22%;background:linear-gradient(90deg,var(--purple),#c084fc);"></div></div>
+              <div class="analytics-val" style="color:var(--purple);">158</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CENTER: LIVE CITY MAP -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🗺️ Live Incident Map — Bengaluru</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div class="live-dot">LIVE</div>
+            <select class="form-select" style="padding:4px 24px 4px 8px;font-size:10px;width:auto;">
+              <option>ALL WARDS</option>
+              <option>INDIRA NAGAR</option>
+              <option>MG ROAD</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="map-container" style="height:380px;">
+          <div class="map-grid"></div>
+          <!-- Roads -->
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.1;" viewBox="0 0 600 380">
+            <line x1="0" y1="190" x2="600" y2="190" stroke="#00FFD4" stroke-width="10"/>
+            <line x1="300" y1="0" x2="300" y2="380" stroke="#00FFD4" stroke-width="10"/>
+            <line x1="0" y1="100" x2="600" y2="100" stroke="#00FFD4" stroke-width="5"/>
+            <line x1="0" y1="280" x2="600" y2="280" stroke="#00FFD4" stroke-width="5"/>
+            <line x1="150" y1="0" x2="150" y2="380" stroke="#00FFD4" stroke-width="5"/>
+            <line x1="450" y1="0" x2="450" y2="380" stroke="#00FFD4" stroke-width="5"/>
+            <circle cx="300" cy="190" r="50" fill="none" stroke="#00FFD4" stroke-width="3"/>
+            <circle cx="300" cy="190" r="100" fill="none" stroke="#00FFD4" stroke-width="1.5" stroke-dasharray="8 4"/>
+          </svg>
+          <!-- Heatmap -->
+          <div class="heatmap-zone" style="width:120px;height:120px;background:rgba(255,68,68,0.12);top:100px;left:200px;"></div>
+          <div class="heatmap-zone" style="width:90px;height:90px;background:rgba(255,179,0,0.15);top:50px;left:350px;"></div>
+          <div class="heatmap-zone" style="width:70px;height:70px;background:rgba(26,143,255,0.12);top:250px;left:100px;"></div>
+          <!-- Many Markers -->
+          <div class="map-marker garbage" style="top:80px;left:120px;">🗑️</div>
+          <div class="map-marker garbage" style="top:120px;left:200px;">🗑️</div>
+          <div class="map-marker garbage" style="top:60px;left:370px;">🗑️</div>
+          <div class="map-marker garbage" style="top:280px;left:420px;">🗑️</div>
+          <div class="map-marker pothole" style="top:170px;left:280px;">🕳️</div>
+          <div class="map-marker pothole" style="top:200px;left:400px;">🕳️</div>
+          <div class="map-marker pothole" style="top:100px;left:500px;">🕳️</div>
+          <div class="map-marker flood" style="top:250px;left:130px;">🌊</div>
+          <div class="map-marker flood" style="top:320px;left:310px;">🌊</div>
+          <div class="map-marker road" style="top:150px;left:450px;">🚧</div>
+          <div class="map-marker road" style="top:290px;left:220px;">🚧</div>
+          <!-- Truck en-route -->
+          <div style="position:absolute;top:155px;left:255px;font-size:18px;animation:markerPop 0.5s ease;">🚛</div>
+          <div style="position:absolute;top:240px;left:350px;font-size:18px;animation:markerPop 0.7s ease;">🚛</div>
+
+          <div class="map-label" style="top:10px;left:14px;font-size:14px;">BENGALURU</div>
+          <div class="map-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--amber);"></div>Garbage (847)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--red);"></div>Pothole (421)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue);"></div>Flooding (247)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--purple);"></div>Road (158)</div>
+            <div class="legend-item"><span style="font-size:10px;">🚛</span> Dispatched</div>
+          </div>
+          <div class="map-controls">
+            <div class="map-btn">＋</div>
+            <div class="map-btn">－</div>
+            <div class="map-btn">🗺</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: DISPATCH + VOLUNTEER STATUS -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <!-- DISPATCH LIST -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🚛 Dispatch Control</div>
+            <span class="tag tag-teal">5 ACTIVE</span>
+          </div>
+          <div>
+            <div class="dispatch-item">
+              <div class="dispatch-icon truck">🚛</div>
+              <div class="dispatch-info">
+                <div class="dispatch-name">Truck #405</div>
+                <div class="dispatch-detail">Indira Nagar · Garbage</div>
+              </div>
+              <span class="badge dispatched">EN-ROUTE</span>
+            </div>
+            <div class="dispatch-item">
+              <div class="dispatch-icon truck">🚛</div>
+              <div class="dispatch-info">
+                <div class="dispatch-name">Truck #312</div>
+                <div class="dispatch-detail">MG Road · Pothole</div>
+              </div>
+              <span class="badge progress">ON-SITE</span>
+            </div>
+            <div class="dispatch-item">
+              <div class="dispatch-icon team">👷</div>
+              <div class="dispatch-info">
+                <div class="dispatch-name">Team Alpha</div>
+                <div class="dispatch-detail">Commercial St · Flooding</div>
+              </div>
+              <span class="badge resolved">COMPLETE</span>
+            </div>
+            <div class="dispatch-item">
+              <div class="dispatch-icon truck">🚛</div>
+              <div class="dispatch-info">
+                <div class="dispatch-name">Truck #280</div>
+                <div class="dispatch-detail">CMH Road · Road</div>
+              </div>
+              <span class="badge dispatched">EN-ROUTE</span>
+            </div>
+          </div>
+          <button class="btn btn-primary w-full" style="margin-top:8px;" onclick="showToast('Dispatch', 'New dispatch order sent to available trucks!')">
+            🚛 SEND NEW DISPATCH
+          </button>
+        </div>
+
+        <!-- VOLUNTEER STATUS -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🤝 Volunteer Status</div>
+            <span class="tag tag-teal">LIVE</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="padding:10px;background:rgba(0,255,212,0.04);border:1px solid rgba(0,255,212,0.15);border-radius:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <div style="font-size:11px;font-weight:600;">🗑️ Major Alley Garbage Pile</div>
+                <span class="badge verified">NSS VERIFIED</span>
+              </div>
+              <div class="text-mono text-faint">3/5 Volunteers · In Progress by NSS Head</div>
+            </div>
+            <div style="padding:10px;background:rgba(26,143,255,0.04);border:1px solid rgba(26,143,255,0.2);border-radius:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <div style="font-size:11px;font-weight:600;">🌊 Flooding in Market</div>
+                <span style="font-size:9px;color:var(--text-faint);font-family:var(--font-mono);">No govt. action needed</span>
+              </div>
+              <div class="text-mono text-faint">3/8 Volunteers · In Progress by NSS Team Head</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TASK VERIFICATION PANEL -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔍 Task Verification</div>
+            <span class="tag tag-amber">2 PENDING</span>
+          </div>
+          <div class="ba-panel" style="margin-bottom:10px;">
+            <div class="ba-slot" style="background:linear-gradient(135deg,#1a0a00,#3d1900);">
+              <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.4;">🗑️</div>
+              <div class="ba-label before">BEFORE</div>
+            </div>
+            <div class="ba-slot" style="background:linear-gradient(135deg,#001a0a,#002d12);">
+              <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.4;">✨</div>
+              <div class="ba-ai-badge">AI ✓</div>
+              <div class="ba-label after">AFTER</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-primary" style="flex:1;" onclick="showToast('Verified!', 'Issue marked as resolved. Citizen notified.')">✅ VERIFY FIX</button>
+            <button class="btn btn-secondary" style="flex:1;" onclick="showToast('Re-work', 'Team notified to re-do the task.')">🔄 RE-WORK</button>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+            <div class="text-mono" style="color:var(--text-dim);">AI VERIFICATION</div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ANALYTICS ROW -->
+    <div class="grid-3">
+      <!-- OPERATIONS TRENDS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📈 Operations Trends</div>
+          <span class="tag tag-teal">7 DAYS</span>
+        </div>
+        <div style="height:80px;position:relative;margin-bottom:10px;">
+          <!-- Fake SVG chart -->
+          <svg viewBox="0 0 280 80" style="width:100%;height:100%;" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(0,255,212,0.3)"/>
+                <stop offset="100%" stop-color="rgba(0,255,212,0)"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(0,230,118,0.3)"/>
+                <stop offset="100%" stop-color="rgba(0,230,118,0)"/>
+              </linearGradient>
+            </defs>
+            <!-- Response time line -->
+            <polyline points="0,60 40,45 80,50 120,30 160,40 200,25 240,35 280,20" fill="none" stroke="#00FFD4" stroke-width="2"/>
+            <!-- Resolution rate line -->
+            <polyline points="0,70 40,65 80,55 120,50 160,45 200,35 240,30 280,25" fill="none" stroke="#00E676" stroke-width="2"/>
+            <!-- Garbage line -->
+            <polyline points="0,40 40,50 80,35 120,55 160,30 200,45 240,40 280,50" fill="none" stroke="#FFB300" stroke-width="1.5" stroke-dasharray="4 2"/>
+          </svg>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--teal);"></div>Response Time</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--emerald);"></div>Resolution Rate</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--amber);"></div>Garbage</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-faint);margin-top:8px;">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+      </div>
+
+      <!-- CITY LEADERBOARD -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🏆 City-Wide Leaderboard</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:var(--teal);letter-spacing:1.5px;margin-bottom:8px;">TOP VOLUNTEERS</div>
+            <div class="leaderboard-list">
+              <div class="lb-item" style="padding:5px 8px;">
+                <div class="lb-rank gold" style="font-size:10px;">1</div>
+                <div class="lb-avatar" style="width:22px;height:22px;font-size:10px;">A</div>
+                <div style="flex:1;"><div class="lb-name" style="font-size:11px;">Aaman</div></div>
+                <div class="lb-pts" style="font-size:13px;">32</div>
+              </div>
+              <div class="lb-item" style="padding:5px 8px;">
+                <div class="lb-rank silver" style="font-size:10px;">2</div>
+                <div class="lb-avatar" style="width:22px;height:22px;font-size:10px;">N</div>
+                <div style="flex:1;"><div class="lb-name" style="font-size:11px;">Anmari</div></div>
+                <div class="lb-pts" style="font-size:13px;color:var(--blue);">13</div>
+              </div>
+              <div class="lb-item" style="padding:5px 8px;">
+                <div class="lb-rank bronze" style="font-size:10px;">3</div>
+                <div class="lb-avatar" style="width:22px;height:22px;font-size:10px;">B</div>
+                <div style="flex:1;"><div class="lb-name" style="font-size:11px;">Abtumand</div></div>
+                <div class="lb-pts" style="font-size:13px;color:var(--amber);">12</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:var(--emerald);letter-spacing:1.5px;margin-bottom:8px;">TOP NSS TEAMS</div>
+            <div class="leaderboard-list">
+              <div class="lb-item" style="padding:5px 8px;">
+                <div class="lb-rank gold" style="font-size:10px;">1</div>
+                <div class="lb-avatar" style="width:22px;height:22px;font-size:10px;">T</div>
+                <div style="flex:1;"><div class="lb-name" style="font-size:11px;">Team A</div></div>
+                <div class="lb-pts" style="font-size:13px;">32</div>
+              </div>
+              <div class="lb-item" style="padding:5px 8px;">
+                <div class="lb-rank silver" style="font-size:10px;">2</div>
+                <div class="lb-avatar" style="width:22px;height:22px;font-size:10px;">T</div>
+                <div style="flex:1;"><div class="lb-name" style="font-size:11px;">Team B</div></div>
+                <div class="lb-pts" style="font-size:13px;color:var(--blue);">13</div>
+              </div>
+              <div class="lb-item" style="padding:5px 8px;">
+                <div class="lb-rank bronze" style="font-size:10px;">3</div>
+                <div class="lb-avatar" style="width:22px;height:22px;font-size:10px;">T</div>
+                <div style="flex:1;"><div class="lb-name" style="font-size:11px;">Team C</div></div>
+                <div class="lb-pts" style="font-size:13px;color:var(--amber);">12</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOVT TEAMS & TRUCKS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🏛️ Govt. Teams & Trucks</div>
+          <span class="tag tag-teal">DIRECTORY</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="dispatch-item">
+            <div class="dispatch-icon truck">🚛</div>
+            <div class="dispatch-info">
+              <div class="dispatch-name">Truck #405</div>
+              <div class="dispatch-detail">Capacity: 5T · Zone: North</div>
+            </div>
+            <span class="badge dispatched">BUSY</span>
+          </div>
+          <div class="dispatch-item">
+            <div class="dispatch-icon truck">🚛</div>
+            <div class="dispatch-info">
+              <div class="dispatch-name">Truck #312</div>
+              <div class="dispatch-detail">Capacity: 3T · Zone: South</div>
+            </div>
+            <span class="badge progress">ON-SITE</span>
+          </div>
+          <div class="dispatch-item">
+            <div class="dispatch-icon team">👷</div>
+            <div class="dispatch-info">
+              <div class="dispatch-name">Team Alpha</div>
+              <div class="dispatch-detail">6 workers · Zone: Central</div>
+            </div>
+            <span class="badge resolved">AVAILABLE</span>
+          </div>
+          <div class="dispatch-item">
+            <div class="dispatch-icon team">👷</div>
+            <div class="dispatch-info">
+              <div class="dispatch-name">Excavator A</div>
+              <div class="dispatch-detail">Heavy equipment · Zone: East</div>
+            </div>
+            <span class="badge reported">STANDBY</span>
+          </div>
+        </div>
+        <button class="btn btn-blue w-full" style="margin-top:8px;" onclick="showToast('Resource', 'Resource allocation panel opened!')">
+          ⚙️ MANAGE RESOURCES
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  // GET USER DATA FROM LOGIN
+const name = localStorage.getItem("name");
+const photo = localStorage.getItem("photo");
+
+if(photo){
+  const img = document.createElement("img");
+  img.src = photo;
+  img.style.width = "35px";
+  img.style.height = "35px";
+  img.style.borderRadius = "50%";
+  
+  const profileArea = document.querySelector(".avatar") || document.body;
+  profileArea.appendChild(img);
+}
+// ============================================
+//  STATE
+// ============================================
+let currentRole = 'citizen';
+let selectedType = null;
+let taskCounts = { 1: 3, 2: 5 };
+let toastQueue = [];
+
+// ============================================
+//  ROLE SWITCHING
+// ============================================
+function switchRole(role) {
+  currentRole = role;
+  document.querySelectorAll('.role-tab').forEach((t,i) => {
+    const roles = ['citizen','volunteer','admin'];
+    t.classList.toggle('active', roles[i] === role);
+  });
+  document.querySelectorAll('.main-content').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + role).classList.add('active');
+
+  const names = { citizen: 'Citizen Dashboard', volunteer: 'Volunteer Connect', admin: 'Command Center' };
+  showToast('Switched', `Welcome to ${names[role]}!`);
+}
+
+// ============================================
+//  MODAL
+// ============================================
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ============================================
+//  ISSUE TYPE SELECTION
+// ============================================
+function selectType(type) {
+  selectedType = type;
+  ['garbage','pothole','flood','road'].forEach(t => {
+    const btn = document.getElementById('type' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (btn) {
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-secondary');
+    }
+  });
+  const selected = document.getElementById('type' + type.charAt(0).toUpperCase() + type.slice(1));
+  if (selected) {
+    selected.classList.remove('btn-secondary');
+    selected.classList.add('btn-primary');
+  }
+}
+
+// ============================================
+//  AUTO DETECT LOCATION
+// ============================================
+function autoDetect() {
+  const loc = document.getElementById('reportLocation');
+  loc.value = 'Detecting...';
+  setTimeout(() => {
+    loc.value = 'Indira Nagar, Bengaluru — 12.9716° N, 77.5946° E';
+    showToast('Location Found', 'Auto-detected: Indira Nagar, Bengaluru');
+  }, 1200);
+}
+
+// ============================================
+//  PHOTO UPLOAD SIMULATION
+// ============================================
+function simulateUpload(phase) {
+  const label = document.getElementById(phase + 'Label');
+  if (label) {
+    label.textContent = 'UPLOADING...';
+    setTimeout(() => {
+      label.textContent = phase.toUpperCase() + ' ✓ UPLOADED';
+      label.style.color = 'var(--emerald)';
+    }, 1000);
+  }
+  showToast('Photo', `${phase.charAt(0).toUpperCase() + phase.slice(1)} photo uploaded!`);
+}
+
+// ============================================
+//  SUBMIT REPORT
+// ============================================
+function submitReport() {
+  const type = selectedType || 'garbage';
+  const loc = document.getElementById('reportLocation').value || 'Indira Nagar';
+  const desc = document.getElementById('reportDesc').value;
+
+  closeModal('reportModal');
+  showToast('Report Submitted!', `Issue #${Math.floor(Math.random()*900+1700)} logged at ${loc}. Nearby volunteers notified!`);
+
+  setTimeout(() => showToast('Volunteers Alerted', '3 volunteers within 1km radius notified of cleanup needed near you!'), 2000);
+  setTimeout(() => showToast('Admin Notified', 'BBMP Command Center received your report for validation.'), 4000);
+}
+
+// ============================================
+//  TOAST NOTIFICATIONS
+// ============================================
+function showToast(title, body) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<div class="toast-title">🔔 ${title.toUpperCase()}</div><div class="toast-body">${body}</div>`;
+  container.appendChild(toast);
+  setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 4200);
+}
+
+// ============================================
+//  CHAT
+// ============================================
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const messages = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = 'chat-msg own';
+  const now = new Date();
+  const time = `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} ${now.getHours()>=12?'PM':'AM'}`;
+  el.innerHTML = `
+    <div class="chat-avatar">Me</div>
+    <div>
+      <div class="chat-sender" style="text-align:right;color:var(--emerald);">YOU</div>
+      <div class="chat-bubble">${msg}</div>
+      <div class="chat-time" style="text-align:right;">${time}</div>
+    </div>`;
+  messages.appendChild(el);
+  messages.scrollTop = messages.scrollHeight;
+  input.value = '';
+
+  // Simulate reply
+  setTimeout(() => {
+    const replies = [
+      { from:'A', name:'AAMAN', msg:'Got it! Will coordinate with the team.' },
+      { from:'N', name:'ANMARI', msg:'Understood. See you all there! 💪' },
+      { from:'B', name:'ABTUMAND', msg:'Copy that. Bringing supplies tomorrow.' }
+    ];
+    const r = replies[Math.floor(Math.random()*replies.length)];
+    const el2 = document.createElement('div');
+    el2.className = 'chat-msg';
+    el2.innerHTML = `
+      <div class="chat-avatar">${r.from}</div>
+      <div>
+        <div class="chat-sender">${r.name}</div>
+        <div class="chat-bubble">${r.msg}</div>
+        <div class="chat-time">just now</div>
+      </div>`;
+    messages.appendChild(el2);
+    messages.scrollTop = messages.scrollHeight;
+  }, 1500 + Math.random()*1000);
+}
+
+// ============================================
+//  VOLUNTEER TASK JOIN
+// ============================================
+function joinTask(taskId) {
+  const count = taskCounts[taskId];
+  if (count >= 5) {
+    showToast('Team Full', 'This task already has maximum volunteers!');
+    return;
+  }
+  taskCounts[taskId]++;
+  const btn = document.getElementById('joinBtn' + taskId);
+  if (btn) {
+    if (taskCounts[taskId] >= 5) {
+      btn.textContent = '✅ JOINED (TEAM FULL)';
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-secondary');
+      btn.disabled = true;
+    } else {
+      btn.textContent = `✅ JOINED (${taskCounts[taskId]}/5)`;
+    }
+  }
+  showToast('Joined Task!', `You're now part of the team! ${taskCounts[taskId]}/5 volunteers joined.`);
+  if (taskCounts[taskId] >= 5) {
+    setTimeout(() => showToast('Team Complete!', 'All 5 volunteers joined! Team chat is now active. You earned 5 points!'), 1500);
+  }
+}
+
+// ============================================
+//  AI VERIFICATION
+// ============================================
+function simulateAIVerification() {
+  const status = document.getElementById('aiVerifyStatus');
+  if (!status) return;
+
+  status.innerHTML = '<span class="spinner"></span> 🤖 AI ANALYZING IMAGE...';
+  status.style.borderColor = 'var(--amber)';
+
+  setTimeout(() => {
+    status.innerHTML = '🤖 AI VERIFICATION: <span style="color:var(--emerald);">✅ GARBAGE REMOVED — AREA CLEAN CONFIRMED</span>';
+    status.style.borderColor = 'var(--emerald)';
+    status.style.background = 'rgba(0,230,118,0.06)';
+    showToast('AI Verified!', 'Image comparison confirmed: area is clean. You may mark task complete!');
+  }, 2500);
+}
+
+function markComplete() {
+  showToast('Task Complete!', 'Issue #1682 marked as resolved. Citizen notified. You earned 10 points! 🎉');
+  setTimeout(() => showToast('Leaderboard Updated', 'You moved up to Rank #1 with 42 points!'), 2000);
+}
+
+// ============================================
+//  ADMIN ACTIONS
+// ============================================
+function validateIssue(btn) {
+  const item = btn.closest('.issue-item');
+  btn.textContent = '✓ VALIDATED';
+  btn.classList.remove('btn-primary');
+  btn.classList.add('btn-secondary');
+  btn.disabled = true;
+  showToast('Validated', 'Issue validated and added to active queue!');
+}
+
+function dispatchTruck(btn) {
+  btn.textContent = '🚛 DISPATCHED';
+  btn.classList.remove('btn-amber');
+  btn.classList.add('btn-primary');
+  btn.disabled = true;
+  showToast('Truck Dispatched!', 'Government truck en-route to issue location. ETA: 15 minutes.');
+}
+
+function assignVolunteers(btn) {
+  btn.textContent = '✓ ASSIGNED';
+  btn.classList.remove('btn-blue');
+  btn.classList.add('btn-primary');
+  btn.disabled = true;
+  showToast('Volunteers Assigned', 'Nearby volunteers notified. 3 volunteers responded!');
+}
+
+function markCritical(btn) {
+  btn.textContent = '⚠️ CRITICAL!';
+  btn.disabled = true;
+  const item = btn.closest('.issue-item');
+  item.style.borderColor = 'var(--red)';
+  item.style.background = 'rgba(255,68,68,0.06)';
+  showToast('CRITICAL ALERT', 'Issue escalated! All available units notified. Priority dispatch activated.');
+}
+
+function showIssueDetail(type) {
+  const names = { garbage: 'Large Garbage Pile — Alley #4', pothole: 'Pothole — MG Road', flood: 'Flooding — Main Market' };
+  showToast('Issue Detail', `${names[type] || 'Issue'} — Status: In Progress. Team assigned.`);
+}
+
+// ============================================
+//  LIVE TICKER — auto notifications
+// ============================================
+const liveEvents = [
+  { title: 'New Report', body: 'Pothole reported at Koramangala 3rd Block' },
+  { title: 'Issue Resolved', body: 'Garbage pile at BTM Layout cleared by volunteers ✅' },
+  { title: 'Volunteer Alert', body: 'Cleanup needed in your area — Jayanagar' },
+  { title: 'Truck Dispatched', body: 'BBMP Truck #118 en-route to HSR Layout' },
+  { title: 'AI Verified', body: 'Road repair at Whitefield confirmed complete 🤖' },
+];
+
+let eventIdx = 0;
+setInterval(() => {
+  if (document.hidden) return;
+  const ev = liveEvents[eventIdx % liveEvents.length];
+  eventIdx++;
+  // Only show occasionally so it doesn't spam
+  if (Math.random() > 0.4) return;
+  showToast(ev.title, ev.body);
+}, 8000);
+
+// ============================================
+//  ANIMATED COUNTERS
+// ============================================
+function animateCounter(el, target, duration = 1200) {
+  const start = 0;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    el.textContent = Math.floor(progress * target).toLocaleString();
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Start welcome toast
+window.addEventListener('load', () => {
+  setTimeout(() => showToast('Welcome!', 'Clean Sweep Connect loaded. Select your role above to begin.'), 500);
+});
+</script>
 
 </body>
 </html>

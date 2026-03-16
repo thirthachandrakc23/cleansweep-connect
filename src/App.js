@@ -179,12 +179,7 @@ const StatCard = ({ label, value, sub, icon, color = C.teal, delay = 0 }) => (
 
 // ── NAVBAR ─────────────────────────────────────────────────────────────────
 const Navbar = ({ page, setPage, handleReportClick, handleVolunteerClick, handleGovClick }) => {
-  const tabs = [
-    { id: "landing", label: "Home" },
-    { id: "reports", label: "Reports" },
-    { id: "volunteer", label: "Volunteers" },
-    { id: "govt", label: "Government" },
-  ];
+  const tabs = [];
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
@@ -214,11 +209,40 @@ const Navbar = ({ page, setPage, handleReportClick, handleVolunteerClick, handle
           }}>{t.label}</button>
         ))}
       </div>
-      <button onClick={handleReportClick} style={{
-        background: `linear-gradient(135deg, ${C.teal}, ${C.tealLight})`,
-        color: "#000", border: "none", borderRadius: 8, padding: "8px 18px",
-        fontSize: 13, fontWeight: 700, cursor: "pointer",
-      }}>Report Issue</button>
+      <div style={{display:"flex", gap:"12px"}}>
+
+<button
+onClick={() => setPage("login")}
+style={{
+background:"linear-gradient(135deg,#22c55e,#16a34a)",
+color:"#000",
+border:"none",
+borderRadius:8,
+padding:"8px 18px",
+fontSize:13,
+fontWeight:700,
+cursor:"pointer"
+}}
+>
+Login
+</button>
+
+<button
+style={{
+background:"linear-gradient(135deg,#38bdf8,#0ea5e9)",
+color:"#000",
+border:"none",
+borderRadius:8,
+padding:"8px 18px",
+fontSize:13,
+fontWeight:700,
+cursor:"pointer"
+}}
+>
+Register
+</button>
+
+</div>
     </nav>
   );
 };
@@ -1216,29 +1240,85 @@ const GovtDashboard = () => {
 export default function App() {
   const [page, setPage] = useState("landing");
 
+  const roleBtn = {
+  width: "100%",
+  padding: "12px",
+  marginTop: "15px",
+  borderRadius: "8px",
+  border: "none",
+  background: "#22c55e",
+  cursor: "pointer",
+  fontWeight: "bold"
+};
+  async function handleLoginRole(role) {
+
+  const user = await loginUser();
+
+  if (!user) return;
+
+  window.location.href = "/friend-ui.html?role=" + role;
+
+}
+
   async function handleReportClick() {
-    const user = await loginUser();
-    if (user) {
-      setPage("reports");
-    }
-  }
-
-  async function handleVolunteerClick() {
-    const user = await loginUser();
-    if (user) {
-      setPage("volunteer");
-    }
-  }
-
-
-  async function handleGovClick() {
   const user = await loginUser();
   if (user) {
-    setPage("govt");
+    window.location.href = "/friend-ui.html?role=citizen";
+  }
+}
+
+async function handleVolunteerClick() {
+  const user = await loginUser();
+  if (user) {
+    window.location.href = "/friend-ui.html?role=volunteer";
+  }
+}
+
+async function handleGovClick() {
+  const user = await loginUser();
+  if (user) {
+    window.location.href = "/friend-ui.html?role=govt";
   }
 }
 
   const pages = {
+
+
+  login: (
+  <div style={{padding:"120px 40px", maxWidth:400, margin:"auto", textAlign:"center"}}>
+
+    <h2>Select Role to Login</h2>
+
+    <button onClick={() => handleLoginRole("citizen")} style={roleBtn}>
+      Citizen
+    </button>
+
+    <button onClick={() => handleLoginRole("volunteer")} style={roleBtn}>
+      Volunteer
+    </button>
+
+    <button onClick={() => handleLoginRole("govt")} style={roleBtn}>
+      Government
+    </button>
+
+    <button
+      onClick={() => setPage("landing")}
+      style={{
+        width:"100%",
+        padding:"10px",
+        marginTop:"20px",
+        borderRadius:"8px",
+        border:"1px solid #22c55e",
+        background:"transparent",
+        color:"#22c55e",
+        cursor:"pointer"
+      }}
+    >
+      Back
+    </button>
+
+  </div>
+),  
   landing: (
     <LandingPage
       handleReportClick={handleReportClick}
